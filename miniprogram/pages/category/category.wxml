@@ -1,5 +1,5 @@
 <!--选择课程证书类别-->
-<view class="style">
+<view class="style" style="margin-top:20rpx;">
   证书类别
   <picker bindchange="certificationCategory" value="{{index}}" range="{{categoryArray}}" class="border">
     当前选择:{{categoryArray[indexCategory]}}
@@ -45,18 +45,26 @@
 
 
   <picker  wx:if="{{indexCategory==7}}"
-  bindchange="certificationName" value="{{index}}" range="{{skilllArray}}" class="border">
+  bindchange="certificationName" value="{{index}}" range="{{skillArray}}" class="border">
     当前选择:{{skillArray[indexName]}}
   </picker>
 
 </view>
 <!--输入成绩-->
-<input placeholder='输入成绩' bindinput='addFraction'></input>
+
+<view>
+  <view>成绩</view>
+  <view class="border">
+  <input placeholder='输入成绩'     bindinput='addFraction'></input>
+  </view>
+</view>
+
 <!-- 照片 -->
 <view class='item_root' bindtap='chuantupian'>
- <text>{{zhaopian}}</text>
+<button> <text>{{zhaopian}}</text></button>
  <view class='right_arrow' />
 </view>
+
  <image class='img' src='{{imgUrl}}'></image>
 <!--添加数据-->
 <button bindtap="addData" type='primary'>提交</button>

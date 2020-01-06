@@ -1,5 +1,6 @@
 var indexCategory=0;//设置默认证书类别
 var indexName=0;//设置默认证书名称
+var tempImg="0";//存放图片的FileID
 Page({
   data: {
     zhaopian: '点击上传证书图片',
@@ -15,8 +16,6 @@ Page({
     skillArray:['一等奖','二等奖','三等奖','参与']
 
   },
-    
-
   //修改证书类别
   certificationCategory:function(event){
     indexName=0;//每次修改证书类别时重置证书名字
@@ -48,7 +47,7 @@ Page({
     wx.chooseImage({
       success: chooseResult => {
         wx.showLoading({
-          title: '上传中。。。',
+          title: '上传中',
         })
         // 将图片上传至云存储空间
         wx.cloud.uploadFile({
@@ -64,6 +63,7 @@ Page({
               title: '上传图片成功',
             })
             if (res.fileID) {
+              tempImg: res.fileID
               that.setData({
                 zhaopian: '图片如下',
                 imgUrl: res.fileID
@@ -82,6 +82,19 @@ Page({
   //获取用户输入的成绩
   addFraction(event) {
     fraction = event.detail.value
+  },
+  onUnload:function(res){
+      wx.showModal({
+        title: '提示',
+        content: '确定撤销所有输入并返回吗',
+        success:function(res){
+          if(res.confirm){
+
+          }
+        }
+      })
+    
+    
   },
 
 
