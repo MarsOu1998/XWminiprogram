@@ -1,0 +1,166 @@
+.amountBg{
+    height:100px;
+    background-color: #3cc51f; 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.img{
+    margin-left: 20px;
+}
+.account{
+    width: 70%;
+    color: #ffffff;
+    margin-left: 10px;
+}
+.nav{
+   width:15px;
+   color: #ffffff;
+}
+.content{
+    background-color: #F4F4F4;
+    height: 500px;
+}
+.order{
+    width: 94%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    background-color: #ffffff;
+    border-radius: 5px;
+    text-align: center;
+    align-items: center;
+    position: absolute;
+    top:90px;
+    margin-left: 3%;
+}
+.desc{
+    width: 25%;
+    font-size: 13px;
+}
+.clear{
+    padding-top: 70px;
+}
+.item{
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    align-items: center;
+}
+.icon{
+    width: 50px;
+    text-align: center;
+}
+.itemName{
+    width: 40%;
+    font-size: 14px;
+    font-weight: bold;
+}
+.line{
+    height: 10px;
+}
+.hr{
+    height: 1px;
+    background-color: #cccccc;
+    opacity: 0.2;
+}
+.remark{
+    font-weight: normal;
+    margin-top:5px;
+}
+.right{
+    width: 40%;
+    text-align: right;
+}
+.opr{
+    color: #5495E6;
+    font-size: 13px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+
+
+
+
+
+
+
+page {
+	background: #eee;
+}
+
+/*user info*/
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 250rpx;
+  background: white;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #333;
+}
+
+/*menu list*/
+.tableviewcell {
+	padding: 20rpx 40rpx;
+	border-bottom: 1rpx solid #ddd;
+	color: #666;
+	background: white;
+	display: flex;
+	align-items: center;
+}
+
+/*icon*/
+.tableviewcell image {
+	width: 60rpx;
+	height: 60rpx;
+}
+
+/*text*/
+.tableviewcell text {
+	font-size: 16px;
+	margin-left: 10px;
+}
+
+/*button*/
+.logout {
+	margin: 30rpx;
+}
+
+/*order*/
+.order-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  margin: 20rpx 0;
+  padding: 20rpx 0;
+}
+
+.order {
+	width: 33.3%;
+	text-align: center;
+}
+
+.order image {
+	width: 90rpx;
+	height: 90rpx;
+}
+
+.order text{
+	display: block;
+	font-size: 30rpx;
+	color: #333;
+}

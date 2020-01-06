@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/member/index/index",
+    "pages/category/category"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#48C23D",
+    "navigationBarTitleText": "学生信息管理系统",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "selectedColor": "#3cc51f",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/icon_home.png",
+        "selectedIconPath": "images/icon_home_selected.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "iconPath": "images/icon_cate.png",
+        "selectedIconPath": "images/icon_cate_selected.png",
+        "text": "提交"
+      },
+      {
+        "pagePath": "pages/member/index/index",
+        "iconPath": "images/icon_member.png",
+        "selectedIconPath": "images/icon_member_selected.png",
+        "text": "我"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,13 @@
+<view class="amountBg">
+  <view class="account">
+    <view>{{userInfo.nickName}}</view>
+    <view>请先登录</view>
+  </view>
+  <view class="nav">></view>
+</view>
+
+<view bindtap="navigateToAboutus" class="tableviewcell">
+	<image src="../../../images/icon_aboutus.png" />
+	<text>关于我们</text>
+</view>
+<button bindtap="logout" type="warn" class="logout">退出</button>
