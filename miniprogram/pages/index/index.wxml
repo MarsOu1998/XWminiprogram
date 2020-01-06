@@ -2,7 +2,7 @@
 <view class="img">
 <image src="../../images/首页图片.png" style="width:100%;height:230px;"></image>
 </view>
-</view>
+</view> 
 <view class="func-area">
 	<view bindtap="showCategories">
 		<image src="../../images/icon_all.png" mode="aspectFill" class="orange" />

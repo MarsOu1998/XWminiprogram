@@ -1,7 +1,14 @@
 <view class="amountBg">
   <view class="account">
-    <view>{{userInfo.nickName}}</view>
-    <view>请先登录</view>
+    <!-- 如果用户暂未登录，显示登陆字样 -->
+    <view wx:if="{{!isLogin}}">
+      <view bindtap="login">请先登录</view>
+    </view>
+    <!-- 如果已登陆，显示用户名字 -->
+    <view wx:else>
+      <view></view>
+    </view>
+
   </view>
   <view class="nav">></view>
 </view>
