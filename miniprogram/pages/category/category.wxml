@@ -1,7 +1,55 @@
-<!--输入课程证书名称-->
-<input placeholder='输入课程证书全称' bindinput='addName'></input>
-<!--输入名字-->
-<input placeholder='输入名字' bindinput='addName'></input>
+<!--选择课程证书类别-->
+<view class="style">
+  证书类别
+  <picker bindchange="certificationCategory" value="{{index}}" range="{{categoryArray}}" class="border">
+    当前选择:{{categoryArray[indexCategory]}}
+  </picker>
+</view>
+<!--选择证书名字-->
+<view style="margin-top:20rpx">
+  证书名称
+  <picker  wx:if="{{indexCategory==0}}"
+  bindchange="certificationName" value="{{index}}" range="{{computerArray}}" class="border">
+    当前选择:{{computerArray[indexName]}}
+  </picker>
+
+  <picker  wx:if="{{indexCategory==1}}"
+  bindchange="certificationName" value="{{index}}" range="{{englishArray}}" class="border">
+    当前选择:{{englishArray[indexName]}}
+  </picker>
+
+  <picker  wx:if="{{indexCategory==2}}"
+  bindchange="certificationName" value="{{index}}" range="{{occupationArray}}" class="border">
+    当前选择:{{occupationArray[indexName]}}
+  </picker>
+
+  <picker  wx:if="{{indexCategory==3}}"
+  bindchange="certificationName" value="{{index}}" range="{{patentArray}}" class="border">
+    当前选择:{{patentArray[indexName]}}
+  </picker>
+
+  <picker  wx:if="{{indexCategory==4}}"
+  bindchange="certificationName" value="{{index}}" range="{{courseArray}}" class="border">
+    当前选择:{{courseArray[indexName]}}
+  </picker>
+
+  <picker  wx:if="{{indexCategory==5}}"
+  bindchange="certificationName" value="{{index}}" range="{{journalArray}}" class="border">
+    当前选择:{{journalArray[indexName]}}
+  </picker>
+
+  <picker  wx:if="{{indexCategory==6}}"
+  bindchange="certificationName" value="{{index}}" range="{{lectureArray}}" class="border">
+    当前选择:{{lectureArray[indexName]}}
+  </picker>
+
+
+  <picker  wx:if="{{indexCategory==7}}"
+  bindchange="certificationName" value="{{index}}" range="{{skilllArray}}" class="border">
+    当前选择:{{skillArray[indexName]}}
+  </picker>
+
+</view>
 <!--输入成绩-->
 <input placeholder='输入成绩' bindinput='addFraction'></input>
 <!-- 照片 -->

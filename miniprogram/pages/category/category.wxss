@@ -74,3 +74,10 @@ page {
 	display: block;
 	line-height: 20px;
 }
+/* 隔开每层选项 */
+.border{
+  background-color:white;
+  height: 100rpx;
+  line-height: 100rpx;
+  
+}

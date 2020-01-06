@@ -19,4 +19,10 @@
 	<image src="../../../images/icon_aboutus.png" />
 	<text>关于我们</text>
 </view>
+<view wx:if="{{administrator}}">
+<view bindtap="navigateToVerify" class="tableviewcell">
+	<image src="../../../images/icon_aboutus.png" />
+  <text>审核证书</text>
+  </view>
+</view>
 <button bindtap="logout" type="warn" class="logout">退出</button>

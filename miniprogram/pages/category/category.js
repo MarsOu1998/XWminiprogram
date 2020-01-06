@@ -1,9 +1,43 @@
+var indexCategory=0;//设置默认证书类别
+var indexName=0;//设置默认证书名称
 Page({
   data: {
     zhaopian: '点击上传证书图片',
     imgUrl: "",
-  },
+    categoryArray: ['计算机证书', '外语证书', '职业、岗位证书', '专利','专业学科竞赛','省级期刊发表专业类文章','专业相关专题讲座','校技能文化节'],
+    computerArray: ['三级国家计算机等级考试','二级国家计算机等级考试','1+X认证(初级)','1+X认证(中级)','1+X(高级)'],
+    englishArray: ['全国英语等级考试四级', '全国英语等级考试六级', '全国英语等级考试三级(A级)', '全国英语等级考试B级'],
+    occupationArray: ['软件资格程序员、ERP证书初级', '软件资格程序员、ERP证书中级', '软件资格程序员、ERP证书高级'],
+    patentArray:['外观设计专利','实用新型专利','发明专利'],
+    courseArray: ['市级二类一等奖', '市级二类二等奖', '市级二类三等奖', '市级二类优秀奖', '省级二类一等奖', '省级二类二等奖', '省级二类三等奖', '省级二类优秀奖', '国家级二类一等奖', '国家级二类二等奖', '国家级二类三等奖', '国家级二类优秀奖', ],
+    journalArray: ['核心文章', '非核心文章'],
+    lectureArray:['一次'],
+    skillArray:['一等奖','二等奖','三等奖','参与']
 
+  },
+    
+
+  //修改证书类别
+  certificationCategory:function(event){
+    indexName=0;//每次修改证书类别时重置证书名字
+    indexCategory = event.detail.value;
+    this.setData({
+      indexCategory,
+      indexName
+    })
+  },
+  //修改证书名称
+  certificationName: function (event) {
+    indexName = event.detail.value;
+    this.setData({
+      indexName
+    })
+  },
+  onShow:function(){
+    this.setData({
+      indexCategory
+    })
+  },
   //上传图片
   chuantupian() {
     wx.cloud.init({
