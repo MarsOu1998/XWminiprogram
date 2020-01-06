@@ -8,6 +8,6 @@ App({
   },
   globalData: {
     isLogin:false,//判定当前用户是否已经登陆
-    userInfo: null
+    userInfo:[]
   }
 })

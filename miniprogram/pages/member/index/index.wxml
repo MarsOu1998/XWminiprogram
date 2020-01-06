@@ -6,11 +6,13 @@
     </view>
     <!-- 如果已登陆，显示用户名字 -->
     <view wx:else>
-      <view></view>
+    <view>欢迎!</view>
+      <view>{{userInfo['nickname']}}</view>
+      <view>{{userInfo['account']}}</view>
     </view>
 
   </view>
-  <view class="nav">></view>
+  <view wx:if="{{!isLogin}}" class="nav">></view>
 </view>
 
 <view bindtap="navigateToAboutus" class="tableviewcell">

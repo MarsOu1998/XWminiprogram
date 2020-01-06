@@ -9,8 +9,8 @@ showCategories: function () {
         icon:"none"
       })
     }else{
-      wx.switchTab({
-        url: "../category/category"
+      wx.navigateTo({
+        url: "/pages/category/category"
       });
     }
     
@@ -24,8 +24,8 @@ showCategories: function () {
       })
     }else{
       wx.navigateTo({
-      url: "../query/query"
-    });
+        url: "/pages/query/query"
+      });
     }
   },
 
