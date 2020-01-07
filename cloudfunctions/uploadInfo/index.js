@@ -10,7 +10,8 @@ exports.main = async (event, context) => {
   try{
     return await db.collection('user').doc(event._id).update({
       data:{
-        categroy:event.categroy
+        category:event.category,
+        
       }
     })
   } catch (e) {

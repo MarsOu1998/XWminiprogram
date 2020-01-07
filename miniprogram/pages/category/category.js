@@ -4,7 +4,8 @@ var indexName=0;//设置默认证书名称
 var tempImg;//存放图片的FileID
 var imgFlag=false;//判断用户是否已经上传头像
 var gradeFlag=false;//判定用户是否已经输入成绩
-var categroy;//存放用户的证书信息
+var category;//存放用户的证书信息
+var uploadCategory;//存放从数据库获取的信息
 //存放证书类别、名称、学分
 var categoryArray;
 var computerArray;
@@ -18,8 +19,12 @@ var skillArray;
 var computerCreditArray;
 var englishCreditArray;
 var occupationCreditArray;
-var patentCridetArray;
-
+var patentCreditArray;
+var courseCreditArray;
+var journalCreditArray;
+var lectureCreditArray;
+var skillCreditArray;
+var check=0;//用户上传的证书信息都未经审核
 
 Page({
   data: {
@@ -54,8 +59,12 @@ Page({
     skillArray= ['一等奖', '二等奖', '三等奖', '参与'],
     computerCreditArray=[1.5,1,2,3,5];
     englishCreditArray=[5,3,2,1],
-    occupationCreditArray=[5,3,2],
-    patentCridetArray=[2,3,5]
+    occupationCreditArray=[2,3,5],
+    patentCreditArray=[2,3,5],
+    courseCreditArray=[4,3,2,1,8,6,4,2,16,12,8,4],
+    journalCreditArray=[5,2],
+    lectureCreditArray=[0.2],
+    skillCreditArray=[0.8,0.5,0.2,0.2]
     this.setData({
       indexCategory,
       categoryArray,
@@ -130,6 +139,7 @@ Page({
 
   //添加数据
   addData:function(){
+    uploadCategory=[];
     if(!gradeFlag){
       wx.showToast({
         title: '尚未输入成绩',
@@ -147,41 +157,117 @@ Page({
         title: '提示',
         content: '是否上传',
         success:function(res){
-          switch(indexCategory){
-            case 0:
-              categroy=[
+            if(indexCategory==0){
+              category=[
                 {category:categoryArray[0],
                 name:computerArray[indexName],
-                credit:computerCreditArray[indexName]},
+                credit:computerCreditArray[indexName],
+                check: 0
+                },
+                
               ]
-              console.log(categroy);
-              break;
-            case 1:
-              break;
-            case 2:
-              break;
-            case 3:
-              break;
-            case 4:
-              break;
-            case 5:
-              break;
-            case 6:
-              break;
-            case 7:
-              break;
+            }
+              else if (indexCategory == 1) {
+                category = [
+                  {
+                    category: categoryArray[1],
+                    name: englishArray[indexName],
+                    credit: englishCreditArray[indexName],
+                    check: 0
+                  },
+                ]
+              }
+            else if (indexCategory == 2){
+              category = [
+                {
+                  category: categoryArray[2],
+                  name: occupationArray[indexName],
+                  credit: occupationCreditArray[indexName],
+                  check: 0
+                },
+              ]
+             }
+           else if(indexCategory == 3){
+              category = [
+                {
+                  category: categoryArray[3],
+                  name: patentArray[indexName],
+                  credit: patentCreditArray[indexName],
+                  check: 0
+                },
+              ]
+              }
+            else if (indexCategory == 4){
+              category = [
+                {
+                  category: categoryArray[4],
+                  name: courseArray[indexName],
+                  credit: courseCreditArray[indexName],
+                  check: 0
+                },
+              ]
+            }
+           else if(indexCategory == 5){
+              category = [
+                {
+                  category: categoryArray[5],
+                  name: journalArray[indexName],
+                  credit: journalCreditArray[indexName],
+                  check: 0
+                },
+              ]
+             }
+            else if (indexCategory == 6){
+              category = [
+                {
+                  category: categoryArray[6],
+                  name: lectureArray[indexName],
+                  credit: lectureCreditArray[indexName],
+                  check: 0
+                },
+              ]
+             }
+            else{
+              category = [
+                {
+                  category: categoryArray[7],
+                  name: skillArray[indexName],
+                  credit: skillCreditArray[indexName],
+                  check:0
+                },
+              ]
+             }
+             
+          console.log(category)
+          if (res.confirm) {
+            wx.cloud.callFunction({
+              name:'selectUserInfo',
+              data:{
+                _id:app.globalData.userInfo['_id']
+              },
+              success:function(res){
+                console.log(res.result.data);
+                if(res.result.data[0]['category']){
+                  uploadCategory = res.result.data[0]['category']
+                }
+                uploadCategory.push(category);
+                console.log(uploadCategory)
+                wx.cloud.callFunction({
+                  name: 'uploadInfo',
+                  data: {
+                    _id: app.globalData.userInfo['_id'],
+                    category: uploadCategory
+                  },
+                  success:function(res){
+                    console.log("上传成功")
+                  }
+                })
+              }
+            })
+            
+          }
 
           }
-          if(res.confirm){
-              wx.cloud.callFunction({
-                name:'uploadInfo',
-                data:{
-                  _id:app.globalData.userInfo['_id'],
-                  categroy:categroy
-                }
-              })
-          }
-        }
       })
     
   },
