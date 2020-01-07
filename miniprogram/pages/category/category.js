@@ -252,6 +252,10 @@ Page({
              
           console.log(category)
           if (res.confirm) {
+            wx.showLoading({
+              title: '上传中',
+              icon:'none'
+            })
             wx.cloud.callFunction({
               name:'selectUserInfo',
               data:{
@@ -272,9 +276,21 @@ Page({
                   },
                   success:function(res){
                     console.log("上传成功")
-                    uploadFlag=true;
-                    wx.navigateBack({
+                    uploadFlag = true;
+                    wx.showToast({
+                      title: '上传成功',
+                      duration:2000,
+                      success:function(){
+                        setTimeout(function(){
+                          wx.navigateBack({
+
+                          })
+                        },2000)
+                       
+                      }
                     })
+                   
+                   
                   }
                 })
               }
