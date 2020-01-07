@@ -1,1 +1,9 @@
-/* pages/verify/verify.wxss */
+.empty{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.empty image{
+   width: 280rpx;
+  height: 280rpx;
+}

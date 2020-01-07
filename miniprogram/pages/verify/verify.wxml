@@ -1,2 +1,9 @@
-<!--pages/verify/verify.wxml-->
-<text>pages/verify/verify.wxml</text>
+<view>
+  <view wx:if="{{count>0}}">
+  <text>当前共有{{count}}位学生的信息需要审核</text>
+  </view>
+  <view wx:else class="empty" >
+    <image  src="cloud://hello-wpfps.6865-hello-wpfps-1300973365/empty.png"></image>
+  </view>
+</view>
+
