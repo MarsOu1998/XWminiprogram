@@ -25,6 +25,8 @@ var journalCreditArray;
 var lectureCreditArray;
 var skillCreditArray;
 var check=0;//用户上传的证书信息都未经审核
+var fraction;//用户输入的成绩
+var uploadFlag=false;//是否已经上传证书资料
 
 Page({
   data: {
@@ -124,9 +126,10 @@ Page({
   //获取用户输入的成绩
   addFraction(event) {
     fraction = event.detail.value
+    gradeFlag=true;
   },
   onUnload:function(res){
-        if(imgFlag){
+        if(!uploadFlag){
           wx.cloud.deleteFile({
             fileList:[tempImg],
             success:function(res){
@@ -140,6 +143,7 @@ Page({
   //添加数据
   addData:function(){
     uploadCategory=[];
+    console.log(gradeFlag)
     if(!gradeFlag){
       wx.showToast({
         title: '尚未输入成绩',
@@ -152,7 +156,7 @@ Page({
         icon: 'none'
       })
     }
-    if(!gradeFlag&&!imgFlag)
+    if(gradeFlag&&imgFlag)
       wx.showModal({
         title: '提示',
         content: '是否上传',
@@ -162,6 +166,7 @@ Page({
                 {category:categoryArray[0],
                 name:computerArray[indexName],
                 credit:computerCreditArray[indexName],
+                fileID:tempImg,
                 check: 0
                 },
                 
@@ -173,6 +178,7 @@ Page({
                     category: categoryArray[1],
                     name: englishArray[indexName],
                     credit: englishCreditArray[indexName],
+                    fileID: tempImg,
                     check: 0
                   },
                 ]
@@ -183,6 +189,7 @@ Page({
                   category: categoryArray[2],
                   name: occupationArray[indexName],
                   credit: occupationCreditArray[indexName],
+                  fileID: tempImg,
                   check: 0
                 },
               ]
@@ -193,6 +200,7 @@ Page({
                   category: categoryArray[3],
                   name: patentArray[indexName],
                   credit: patentCreditArray[indexName],
+                  fileID: tempImg,
                   check: 0
                 },
               ]
@@ -203,6 +211,7 @@ Page({
                   category: categoryArray[4],
                   name: courseArray[indexName],
                   credit: courseCreditArray[indexName],
+                  fileID: tempImg,
                   check: 0
                 },
               ]
@@ -213,6 +222,7 @@ Page({
                   category: categoryArray[5],
                   name: journalArray[indexName],
                   credit: journalCreditArray[indexName],
+                  fileID: tempImg,
                   check: 0
                 },
               ]
@@ -223,6 +233,7 @@ Page({
                   category: categoryArray[6],
                   name: lectureArray[indexName],
                   credit: lectureCreditArray[indexName],
+                  fileID: tempImg,
                   check: 0
                 },
               ]
@@ -233,6 +244,7 @@ Page({
                   category: categoryArray[7],
                   name: skillArray[indexName],
                   credit: skillCreditArray[indexName],
+                  fileID: tempImg,
                   check:0
                 },
               ]
@@ -260,6 +272,9 @@ Page({
                   },
                   success:function(res){
                     console.log("上传成功")
+                    uploadFlag=true;
+                    wx.navigateBack({
+                    })
                   }
                 })
               }
