@@ -25,7 +25,7 @@ var journalCreditArray;
 var lectureCreditArray;
 var skillCreditArray;
 var check=0;//用户上传的证书信息都未经审核
-var fraction;//用户输入的成绩
+var fraction=0;//用户输入的成绩
 var uploadFlag=false;//是否已经上传证书资料
 
 Page({
@@ -126,7 +126,13 @@ Page({
   //获取用户输入的成绩
   addFraction(event) {
     fraction = event.detail.value
+    console.log(indexCategory)
+    if(fraction!=0)
     gradeFlag=true;
+    else{
+    gradeFlag = false;
+    }
+    
   },
   onUnload:function(res){
         if(!uploadFlag){
@@ -143,20 +149,25 @@ Page({
   //添加数据
   addData:function(){
     uploadCategory=[];
-    console.log(gradeFlag)
-    if(!gradeFlag){
-      wx.showToast({
-        title: '尚未输入成绩',
-        icon:'none'
-      })
+    console.log(indexCategory)
+    if (indexCategory >=3&&indexCategory<=7){
+      console.log("123")
+      gradeFlag = true;
     }
+    console.log(gradeFlag)
     if(!imgFlag){
       wx.showToast({
         title: '尚未上传证书图片',
         icon: 'none'
       })
     }
-    if(gradeFlag&&imgFlag)
+    if(!gradeFlag){
+      wx.showToast({
+        title: '尚未输入成绩',
+        icon:'none'
+      })
+    }
+    if(imgFlag&&gradeFlag){
       wx.showModal({
         title: '提示',
         content: '是否上传',
@@ -167,6 +178,7 @@ Page({
                 name:computerArray[indexName],
                 credit:computerCreditArray[indexName],
                 fileID:tempImg,
+                grade:fraction,
                 check: 0
                 },
                 
@@ -179,6 +191,7 @@ Page({
                     name: englishArray[indexName],
                     credit: englishCreditArray[indexName],
                     fileID: tempImg,
+                    grade: fraction,
                     check: 0
                   },
                 ]
@@ -190,6 +203,7 @@ Page({
                   name: occupationArray[indexName],
                   credit: occupationCreditArray[indexName],
                   fileID: tempImg,
+                  grade: fraction,
                   check: 0
                 },
               ]
@@ -201,6 +215,7 @@ Page({
                   name: patentArray[indexName],
                   credit: patentCreditArray[indexName],
                   fileID: tempImg,
+                  grade: fraction,
                   check: 0
                 },
               ]
@@ -211,6 +226,7 @@ Page({
                   category: categoryArray[4],
                   name: courseArray[indexName],
                   credit: courseCreditArray[indexName],
+                  grade: fraction,
                   fileID: tempImg,
                   check: 0
                 },
@@ -222,6 +238,7 @@ Page({
                   category: categoryArray[5],
                   name: journalArray[indexName],
                   credit: journalCreditArray[indexName],
+                  grade: fraction,
                   fileID: tempImg,
                   check: 0
                 },
@@ -233,6 +250,7 @@ Page({
                   category: categoryArray[6],
                   name: lectureArray[indexName],
                   credit: lectureCreditArray[indexName],
+                  grade: fraction,
                   fileID: tempImg,
                   check: 0
                 },
@@ -245,6 +263,7 @@ Page({
                   name: skillArray[indexName],
                   credit: skillCreditArray[indexName],
                   fileID: tempImg,
+                  grade: fraction,
                   check:0
                 },
               ]
@@ -300,7 +319,7 @@ Page({
 
           }
       })
-    
+  }
   },
 
   //查询数据

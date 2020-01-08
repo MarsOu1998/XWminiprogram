@@ -7,3 +7,7 @@
    width: 280rpx;
   height: 280rpx;
 }
+/* 按钮样式 */
+.button{
+  display: flex;
+}

@@ -1,6 +1,17 @@
 <view>
   <view wx:if="{{count>0}}">
   <text>当前共有{{count}}位学生的信息需要审核</text>
+  <view>学生姓名:{{userInfo['nickname']}}</view>
+  <view>学生学号:{{userInfo['account']}}</view>
+  <view>证书类型:{{userInfo['category'][0][0]['category']}}</view>
+  <view>证书名称:{{userInfo['category'][0][0]['name']}}</view>
+  <view>成绩:{{userInfo['category'][0][0]['grade']}}</view>
+  <view>证书照片</view>
+  <view><image src="{{userInfo['category'][0][0]['fileID']}}"></image></view>
+  <view class="button">
+  <button type="primary" style="width:40%" bindtap="agree">通过</button>
+   <button type="warn" style="width:40%" bindtap="disagree">拒绝</button>
+   </view>
   </view>
   <view wx:else class="empty" >
     <image  src="cloud://hello-wpfps.6865-hello-wpfps-1300973365/empty.png"></image>

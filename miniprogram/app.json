@@ -1,10 +1,15 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/category/category",
+    "pages/verify/verify",
     "pages/member/index/index",
     "pages/login/login",
-    "pages/verify/verify"
+    
+    "pages/index/index",
+    "pages/category/category"
+    
+   
+    
+    
   ],
   "window": {
     "navigationBarBackgroundColor": "#48C23D",
