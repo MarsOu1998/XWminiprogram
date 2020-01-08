@@ -1,23 +1,23 @@
-// pages/query/query.js
-Component({
-  /**
-   * 组件的属性列表
-   */
-  properties: {
-
+var app=getApp();
+var userInfo;//存放用户信息
+Page({
+  onShow: function () {
+    var that=this;
+    userInfo=[]
+    wx.cloud.callFunction({
+      name:'selectUserInfo',
+      data:{
+        _id:app.globalData.userInfo['_id']
+      },
+      success:function(res){
+        userInfo = res.result.data[0]['category'];
+        console.log(userInfo)
+        that.setData({
+          userInfo
+        })
+      }
+    })
   },
 
-  /**
-   * 组件的初始数据
-   */
-  data: {
-
-  },
-
-  /**
-   * 组件的方法列表
-   */
-  methods: {
-
-  }
+  
 })

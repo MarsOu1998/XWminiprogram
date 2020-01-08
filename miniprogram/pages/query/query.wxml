@@ -1,2 +1,17 @@
-<!--pages/query/query.wxml-->
-<text>当前成绩信息</text>
+<view wx:if="{{userInfo.length==0}}">
+</view>
+
+<view wx:else class="navigation">
+  <view>证书类型</view>
+  <view style="margin-left:150rpx">证书名称</view>
+  <view style="margin-left:150rpx">成绩</view>
+  <view>学分</view>
+</view>
+<view  wx:for="{{userInfo}}" wx:key="id" >
+    <view  class="navigation" wx:for="{{item}}" wx:for-item="item2"  wx:for-index="index2" wx:key="id">
+    <view>{{item2['category']}}</view>
+    <view>{{item2['name']}}</view>
+    <view>{{item2['grade']}}</view>
+    <view>{{item2['credit']}}</view>
+</view>
+</view>

@@ -1,14 +1,13 @@
 {
   "pages": [
+    
+    "pages/index/index",
+    "pages/query/query",
     "pages/verify/verify",
     "pages/member/index/index",
     "pages/login/login",
     
-    "pages/index/index",
     "pages/category/category"
-    
-   
-    
     
   ],
   "window": {

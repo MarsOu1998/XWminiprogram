@@ -1,1 +1,10 @@
-/* pages/query/query.wxss */
+.navigation{
+  display:flex;
+  justify-content: space-between;
+  font-size: 30rpx;
+}
+.navigation2{
+  display:flex;
+  justify-content: space-between;
+  font-size: 20rpx;
+}
