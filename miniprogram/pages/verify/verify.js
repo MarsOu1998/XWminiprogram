@@ -2,6 +2,7 @@ var app=getApp();
 var userInfo;//存放用户信息
 var count;//统计共有多少学生信息需要审核
 var finish=false;//当前用户所有证书是否审核完毕
+var temp;//存储暂时被剔除的数组
 var check=0;
 Page({
   
@@ -10,6 +11,7 @@ Page({
   
   onShow:function(){
     var that=this;
+    temp=[]
     wx.cloud.callFunction({
       name:'countUncheckInfo',
       data:{},
@@ -26,10 +28,13 @@ Page({
               userInfo=res.result.data[0];
               for(var j=0;j<userInfo['category'].length;j++){
                 if(userInfo['category'][j][0]['check']==1){
+                  temp.push(userInfo['category'][j]);
                   userInfo['category'].splice(j,1);
+
                 }
               }
-              console.log(userInfo)
+              console.log("已被剔除：");
+              console.log(temp)
               that.setData({
                 userInfo
               })
