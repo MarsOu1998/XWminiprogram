@@ -8,7 +8,7 @@ Page({
       name:'selectUserInfo',
       data:{
         _id:app.globalData.userInfo['_id']
-      },
+      },   
       success:function(res){
         userInfo = res.result.data[0]['category'];
         console.log(userInfo)
