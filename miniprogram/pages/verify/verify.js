@@ -1,174 +1,160 @@
 var app=getApp();
-var userInfo;//存放用户信息
+var userInfo;//用于前端页面显示用户信息
+var uploadInfo;//用于数据信息显示
 var count;//统计共有多少学生信息需要审核
 var finish=false;//当前用户所有证书是否审核完毕
-var temp;//存储暂时被剔除的数组
+var temp;//存储未被检查的数组
 var check=0;
 Page({
-  
-   
-
-  
-  onShow:function(){
+  onShow:function(res){
     var that=this;
-    temp=[]
+    uploadInfo=[];
+    temp=[];
+    userInfo=[];
     wx.cloud.callFunction({
       name:'countUncheckInfo',
       data:{},
       success:function(res){
-        count=res.result.total
-        that.setData({
-          count
-        })
+        console.log(res.result.total)
+        count = res.result.total;
         if(count>0){
           wx.cloud.callFunction({
             name:'selectAllInfo',
             data:{},
             success:function(res){
-              userInfo=res.result.data[0];
-              for(var j=0;j<userInfo['category'].length;j++){
-                if(userInfo['category'][j][0]['check']==1){
-                  temp.push(userInfo['category'][j]);
-                  userInfo['category'].splice(j,1);
-
+              console.log(res.result.data[0]);
+              userInfo = res.result.data[0];
+          
+              for(var i=0;i<userInfo['category'].length;i++){
+                if (userInfo['category'][i][0]['check']==1){
+                  uploadInfo.push(userInfo['category'][i]);
+                  userInfo['category'].splice(i, 1)
+                  i = -1;
                 }
               }
-              console.log("已被剔除：");
+              for(var i=0;i<userInfo['category'].length;i++){
+                if (userInfo['category'][i][0]['check'] == 0) {
+                  temp.push(userInfo['category'][i]);   
+                  
+                }
+              }
+              
+              console.log("已完成检查的内容如下:")
+              console.log(uploadInfo)
+              console.log("未完成检查内容如下:");
               console.log(temp)
+              console.log(userInfo)
               that.setData({
-                userInfo
+                count,userInfo
               })
+              //以上从数据库中获取数据，根据是否检查过进行分割，接下使用agreeUser云函数来对数据库进行更新
+
+            }
+          })
+        }
+      }
+    })
+         
+  },
+  agree:function(){
+    var that=this;
+    finish=false;
+    wx.showModal({
+      title:'提示',
+      content: '确定通过吗',
+      success:function(res){
+        if(res.confirm){
+          userInfo['category'][0][0]['check']=1;
+          console.log(userInfo);
+          for(var i=0;i<userInfo['category'].length;i++){
+            uploadInfo.push(userInfo['category'][i])                
+          }
+          console.log(uploadInfo)
+          temp.splice(0, 1)
+          console.log("未检查的内容有");
+          console.log(temp)
+          wx.cloud.callFunction({
+            name:'agreeUser',
+            data:{
+              _id:userInfo['_id'],
+              category:uploadInfo
+            },
+            success:function(res){
+              console.log("成功通过");
+              userInfo['category'].splice(0, 1)
+              for(var i=0;i<uploadInfo.length;i++){
+                if (uploadInfo[i][0]['check'] == 0) {
+                  uploadInfo.splice(i,1)
+                  i=-1;
+                }
+              }
+              
+              if(userInfo['category'].length==0){
+                finish=true;
+              }
+              else
+              finish=false;
+              console.log("finish:"+finish)
+              if(finish){
+                count-=1;
+              }
+              that.setData({
+                userInfo,count
+              })
+              if(count==0){
+                wx.cloud.callFunction({
+                  name:'agreeUser',
+                  data:{
+                    _id:userInfo['_id'],
+                    check:1
+                  },
+                  success:function(res){
+                    console.log("check已修改为1")
+                  }
+                })
+              }
+
             }
           })
         }
       }
     })
   },
-  agree:function(){
-    var i=0;
+  disagree:function(){
     var that=this;
+
     wx.showModal({
       title: '提示',
-      content: '确定通过审核吗',
+      content: '是否拒绝',
       success:function(res){
         if(res.confirm){
-          userInfo['category'][0][0]['check']=1;
-          console.log(userInfo['category'])
-          for (i = 0; i < userInfo['category'].length;i++){
-            if (userInfo['category'][i][0]['check']==0){
-              finish=false;
-              break;
-            }
-          }
-          if (userInfo['category'].length==1){
-            finish=true;
-            count-=1;
-            that.setData({ 
-              count 
-              })
-            }
-            console.log(finish);
-            console.log(count)
-          if(finish){
-            console.log("当前" + userInfo['nickname']+"的信息已审核完毕");
-            wx.cloud.callFunction({
-              name: 'agreeUser',
-              data:{
-                _id:userInfo['_id'],
-                category:userInfo['category'],
-                check:1
-              },
-              success:function(res){
-                console.log("成功通过")
-                if (count != 0) {
-                  wx.cloud.callFunction({
-                    name: 'selectAllInfo',
-                    data: {},
-                    success: function (res) {
-                      userInfo = res.result.data[0];
-                      for (var j = 0; j < userInfo['category'].length; j++) {
-                        if (userInfo['category'][j][0]['check'] == 1) {
-                          userInfo['category'].splice(j, 1);
-                        }
-                      }
-                      console.log(userInfo)
-                      that.setData({
-                        userInfo
-                      })
-                    }
-                  })
-                }
-              }
-            })
-          }
-          else{
-            wx.cloud.callFunction({
-              name: 'agreeUser',
-              data: {
-                _id: userInfo['_id'],
-                category: userInfo['category'],
-                check: 0
-              },
-              success: function (res) {
-                console.log(res)
-                console.log("成功通过");
-                userInfo['category'].splice(0, 1);
-                that.setData({
-                  userInfo
-                })
-                
-              }
-            })
-          }
-        }
-      }
-    })
-  },
-  disagree:function(res){
-    var that=this;
-    check=0;
-    wx.showModal({
-      title: '提示',
-      content: '确定拒绝吗',
-      success:function(res){
-        if(res.confirm){
-          userInfo['category'].splice(0,1);
-          console.log(userInfo)
-          if (userInfo['category'].length==0){
-            check=1;
-            count-=1;
-          }
-          console.log(check)
+          temp.splice(0,1);
+          if(temp.length==0){
+
+          }else
+          uploadInfo.push(temp);
+          console.log(uploadInfo);
           wx.cloud.callFunction({
             name:'agreeUser',
             data:{
-              _id: userInfo['_id'],
-              category: userInfo['category'],
-              check:check
+              _id:userInfo['_id'],
+              category: uploadInfo
             },
             success:function(res){
-              console.log("已拒绝该证书申请")
-              if(count!=0){
-                wx.cloud.callFunction({
-                  name: 'selectAllInfo',
-                  data: {},
-                  success: function (res) {
-                    userInfo = res.result.data[0];
-                    for (var j = 0; j < userInfo['category'].length; j++) {
-                      if (userInfo['category'][j][0]['check'] == 1) {
-                        userInfo['category'].splice(j, 1);
-                      }
-                    }
-                    console.log(userInfo)
-                    that.setData({
-                      userInfo
-                    })
-                  }
-                })
+              console.log("已拒绝该申请");
+              for(var i=0;i<userInfo['category'].length;i++){
+                if(userInfo['category'][i][0]['check']==0){
+                  userInfo['category'].splice(i,1);
+                  count-=1;
+                  break;
+                }
+              }
+              
+              if (userInfo['category'].length==0){
+                count=0;
               }
               that.setData({
-                count,
-                userInfo
+                userInfo,count
               })
             }
           })
@@ -176,5 +162,4 @@ Page({
       }
     })
   }
-  
 })
