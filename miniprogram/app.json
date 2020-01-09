@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/verify/verify",
+    
     "pages/index/index",
     "pages/query/query",
-    
+    "pages/verify/verify",
     "pages/member/index/index",
     "pages/login/login",
     "pages/category/category"
