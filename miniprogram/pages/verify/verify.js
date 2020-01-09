@@ -99,9 +99,10 @@ Page({
                 count-=1;
               }
               that.setData({
-                userInfo,count
+                count
               })
-              if(count==0){
+              
+              if(finish){
                 wx.cloud.callFunction({
                   name:'agreeUser',
                   data:{
@@ -110,6 +111,48 @@ Page({
                   },
                   success:function(res){
                     console.log("check已修改为1")
+                  }
+                })
+              }
+              if(finish){
+                userInfo=[];
+                temp=[];
+                uploadInfo=[];
+                wx.cloud.callFunction({
+                  'name': 'selectAllInfo',
+                  daya: {},
+                  success: function (res) {
+                    console.log("已获取新成员信息");  
+
+                    console.log(res.result.data[0]);
+                    userInfo = res.result.data[0];
+
+                    for (var i = 0; i < userInfo['category'].length; i++) {
+                      if (userInfo['category'][i][0]['check'] == 1) {
+                        uploadInfo.push(userInfo['category'][i]);
+                        userInfo['category'].splice(i, 1)
+                        i = -1;
+                      }
+                    }
+                    for (var i = 0; i < userInfo['category'].length; i++) {
+                      if (userInfo['category'][i][0]['check'] == 0) {
+                        temp.push(userInfo['category'][i]);
+
+                      }
+                    }
+
+                    console.log("已完成检查的内容如下:")
+                    console.log(uploadInfo)
+                    console.log("未完成检查内容如下:");
+                    console.log(temp)
+                    console.log(userInfo)
+                    that.setData({
+                      count, userInfo
+                    })
+              //以上从数据库中获取数据，根据是否检查过进行分割，接下使用agreeUser云函数来对数据库进行更新
+                    
+
+                    
                   }
                 })
               }
@@ -122,7 +165,7 @@ Page({
   },
   disagree:function(){
     var that=this;
-
+    finish=false;
     wx.showModal({
       title: '提示',
       content: '是否拒绝',
@@ -130,9 +173,10 @@ Page({
         if(res.confirm){
           temp.splice(0,1);
           if(temp.length==0){
-
-          }else
+            finish=true;
+          }else{
           uploadInfo.push(temp);
+          }
           console.log(uploadInfo);
           wx.cloud.callFunction({
             name:'agreeUser',
@@ -146,16 +190,88 @@ Page({
                 if(userInfo['category'][i][0]['check']==0){
                   userInfo['category'].splice(i,1);
                   count-=1;
+                  
                   break;
                 }
               }
               
               if (userInfo['category'].length==0){
-                count=0;
+               finish=true;
               }
-              that.setData({
-                userInfo,count
-              })
+              else
+              finish=false;
+              console.log("finish:"+finish);
+              if(finish&&count!=0){
+                wx.cloud.callFunction({
+                  name:'agreeUser',
+                  data:{
+                    _id:userInfo['_id'],
+                    check:1
+                  },
+                  success:function(res){
+                    userInfo = [];
+                    temp = [];
+                    uploadInfo = [];
+                    wx.cloud.callFunction({
+                      'name': 'selectAllInfo',
+                      daya: {},
+                      success: function (res) {
+                        console.log("已获取新成员信息");
+
+                        console.log(res.result.data[0]);
+                        userInfo = res.result.data[0];
+
+                        for (var i = 0; i < userInfo['category'].length; i++) {
+                          if (userInfo['category'][i][0]['check'] == 1) {
+                            uploadInfo.push(userInfo['category'][i]);
+                            userInfo['category'].splice(i, 1)
+                            i = -1;
+                          }
+                        }
+                        for (var i = 0; i < userInfo['category'].length; i++) {
+                          if (userInfo['category'][i][0]['check'] == 0) {
+                            temp.push(userInfo['category'][i]);
+
+                          }
+                        }
+
+                        console.log("已完成检查的内容如下:")
+                        console.log(uploadInfo)
+                        console.log("未完成检查内容如下:");
+                        console.log(temp)
+                        console.log(userInfo)
+                        that.setData({
+                          count, userInfo
+                        })
+                        //以上从数据库中获取数据，根据是否检查过进行分割，接下使用agreeUser云函数来对数据库进行更新
+
+
+
+                      }
+                    })
+
+
+                  }
+                })
+                }
+             
+              else
+                that.setData({
+                  count,userInfo
+                })
+              if(count==0){
+                wx.cloud.callFunction({
+                  name:'agreeUser',
+                  data:{
+                    _id:userInfo['_id'],
+                    check:1
+                  },
+                  success:function(res){
+                    console.log("check已变为1")
+                  }
+                })
+              }
+                
             }
           })
         }
