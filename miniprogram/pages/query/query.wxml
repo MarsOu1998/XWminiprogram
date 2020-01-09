@@ -3,7 +3,7 @@
 
 <view wx:else class="navigation">
   <view>证书类型</view>
-  <view style="margin-left:150rpx">证书名称</view>
+  <view style="margin-left:150rpx">证书名称</view>  
   <view style="margin-left:150rpx">成绩</view>
   <view>学分</view>
 </view>
