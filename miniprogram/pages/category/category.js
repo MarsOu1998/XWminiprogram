@@ -50,6 +50,8 @@ Page({
     })
   },
   onShow:function(){
+    imgFlag=false;
+    gradeFlag=false;
     categoryArray=['计算机证书', '外语证书', '职业、岗位证书', '专利', '专业学科竞赛', '省级期刊发表专业类文章', '专业相关专题讲座', '校技能文化节'],
     computerArray=['三级国家计算机等级考试', '二级国家计算机等级考试', '1+X认证(初级)', '1+X认证(中级)', '1+X(高级)'],
     englishArray= ['全国英语等级考试六级', '全国英语等级考试四级', '全国英语等级考试三级(A级)', '全国英语等级考试B级'],
@@ -167,6 +169,7 @@ Page({
         icon:'none'
       })
     }
+    console.log("图片上传："+imgFlag)
     if(imgFlag&&gradeFlag){
       wx.showModal({
         title: '提示',

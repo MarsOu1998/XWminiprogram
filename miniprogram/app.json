@@ -1,8 +1,7 @@
 {
   "pages": [
-    
-    "pages/index/index",
     "pages/query/query",
+    "pages/index/index",
     "pages/verify/verify",
     "pages/member/index/index",
     "pages/login/login",
